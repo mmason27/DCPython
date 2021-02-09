@@ -5,14 +5,13 @@ class Store:
         self.name = name
         self.address = address
         self.items = []
+class Item:
+    def __init__(self, item, price, quantity):
+        self.item = item
+        self.price = price
+        self.quantity = quantity 
 
-    def __str__(self):
-        return "Store: % s Address: % s" % (self.name, self.address)  
-
-print("Enter 1 to add a store.")
-print("Enter 2 to add item to a store.")
-print("Enter 3 to view your shopping list.")
-print("Enter q to quit.")
+print("\nEnter 1 to add a store. \nEnter 2 to add item to a store.\nEnter 3 to view your shopping list.\nEnter q to quit.")
 
 while True:
 
@@ -24,14 +23,23 @@ while True:
         stores.append(store)
     
     elif choice == "2":
-        for index, value in enumerate(stores):
-            print (index + 1, value) 
-        store_choice = input("Enter which store you would like to add your items to: ")
-        items = input("Enter the item:  ")
+        for index in range(0, len(stores)):
+            store = stores[index]
+            print(f"{index + 1} {store.name} - {store.address}")
+        
+        store_choice = int(input("Enter which store you would like to add your items to: "))
+        store = stores[store_choice - 1]
+        item = input("Enter the item:  ")
         price = input("Enter the price: ")
         quantity = input("Enter the quantity: ")
-        store = stores[store_choice] 
-        store.items.append(items)
+        new_item = Item(item, price, quantity)
+        store.items.append(new_item)
 
     elif choice == "3": 
-        print(stores)
+        for store in stores:
+            print(f'{store.name} {store.address}')
+            for item in store.items:
+                print(f"{item.item} - ${item.price}")
+
+    elif choice == "q":
+        break 
